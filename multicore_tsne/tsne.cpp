@@ -39,7 +39,7 @@ void TSNE::run(double* X, int N, int D, double* Y, int no_dims, double perplexit
     num_threads = _num_threads;
     omp_set_num_threads(num_threads);
 
-    printf("Using no_dims = %d, perplexity = %f, and theta = %f\n", no_dims, perplexity, theta);
+//    printf("Using no_dims = %d, perplexity = %f, and theta = %f\n", no_dims, perplexity, theta);
 
     // Set learning parameters
     float total_time = .0;
@@ -58,7 +58,7 @@ void TSNE::run(double* X, int N, int D, double* Y, int no_dims, double perplexit
     }
 
     // Normalize input data (to prevent numerical problems)
-    printf("Computing input similarities...\n");
+//    printf("Computing input similarities...\n");
     start = time(0);
     zeroMean(X, N, D);
     double max_X = .0;
@@ -86,7 +86,7 @@ void TSNE::run(double* X, int N, int D, double* Y, int no_dims, double perplexit
     }
 
     end = time(0);
-    printf("Done in %4.2f seconds (sparsity = %f)!\nLearning embedding...\n", (float)(end - start) , (double) row_P[N] / ((double) N * (double) N));
+//    printf("Done in %4.2f seconds (sparsity = %f)!\nLearning embedding...\n", (float)(end - start) , (double) row_P[N] / ((double) N * (double) N));
 
     // Step 2
 
@@ -105,6 +105,7 @@ void TSNE::run(double* X, int N, int D, double* Y, int no_dims, double perplexit
 
     // Perform main training loop
     start = time(0);
+    printf("Iterations, Error, Time");
     for (int iter = 0; iter < max_iter; iter++) {
 
         // Compute approximate gradient
@@ -144,10 +145,10 @@ void TSNE::run(double* X, int N, int D, double* Y, int no_dims, double perplexit
             C = evaluateError(row_P, col_P, val_P, Y, N, theta);  // doing approximate computation here!
 
             if (iter == 0)
-                printf("Iteration %d: error is %f\n", iter + 1, C);
+                printf("%d,%f,0\n", iter + 1, C);
             else {
                 total_time += (float) (end - start);
-                printf("Iteration %d: error is %f (50 iterations in %4.2f seconds)\n", iter, C, (float) (end - start) );
+                printf("%d,%f,%4.2f\n", iter, C, (float) (end - start) );
             }
             start = time(0);
         }
@@ -163,7 +164,7 @@ void TSNE::run(double* X, int N, int D, double* Y, int no_dims, double perplexit
     free(col_P); col_P = NULL;
     free(val_P); val_P = NULL;
 
-    printf("Fitting performed in %4.2f seconds.\n", total_time);
+//    printf("Fitting performed in %4.2f seconds.\n", total_time);
 }
 
 
@@ -266,7 +267,7 @@ void TSNE::computeGaussianPerplexity(double* X, int N, int D, int** _row_P, int*
     tree->create(obj_X);
 
     // Loop over all points to find nearest neighbors
-    printf("Building tree...\n");
+//    printf("Building tree...\n");
 
     int steps_completed = 0;
     #pragma omp parallel for
@@ -348,7 +349,7 @@ void TSNE::computeGaussianPerplexity(double* X, int N, int D, int** _row_P, int*
         if (steps_completed % 10000 == 0)
         {
             #pragma omp critical
-            printf(" - point %d of %d\n", steps_completed, N);
+//            printf(" - point %d of %d\n", steps_completed, N);
         }
     }
 
@@ -489,7 +490,7 @@ extern "C"
 {
     extern void tsne_run_double(double* X, int N, int D, double* Y, int no_dims, double perplexity, double theta, int _num_threads, int max_iter, int random_state)
     {
-        printf("Performing t-SNE using %d cores.\n", _num_threads);
+//        printf("Performing t-SNE using %d cores.\n", _num_threads);
         TSNE tsne;
         tsne.run(X, N, D, Y, no_dims, perplexity, theta, _num_threads, max_iter, random_state);
     }
