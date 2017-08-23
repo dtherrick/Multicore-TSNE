@@ -1,0 +1,9 @@
+MANIFEST.in
+setup.py
+MulticoreTSNE.egg-info/PKG-INFO
+MulticoreTSNE.egg-info/SOURCES.txt
+MulticoreTSNE.egg-info/dependency_links.txt
+MulticoreTSNE.egg-info/requires.txt
+MulticoreTSNE.egg-info/top_level.txt
+python/__init__.py
+python/libtsne_multicore.so

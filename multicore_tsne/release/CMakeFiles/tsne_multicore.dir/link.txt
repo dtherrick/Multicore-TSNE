@@ -1,0 +1,1 @@
+/bin/c++  -fPIC  -fopenmp -O3 -fPIC -ffast-math -funroll-loops -O3 -DNDEBUG   -shared -Wl,-soname,libtsne_multicore.so -o libtsne_multicore.so CMakeFiles/tsne_multicore.dir/quadtree.cpp.o CMakeFiles/tsne_multicore.dir/tsne.cpp.o 

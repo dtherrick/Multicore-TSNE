@@ -346,11 +346,11 @@ void TSNE::computeGaussianPerplexity(double* X, int N, int D, int** _row_P, int*
         #pragma omp atomic
         ++steps_completed;
 
-        if (steps_completed % 10000 == 0)
-        {
-            #pragma omp critical
+//        if (steps_completed % 10000 == 0)
+//        {
+//          #pragma omp critical
 //            printf(" - point %d of %d\n", steps_completed, N);
-        }
+//        }
     }
 
     // Clean up memory
